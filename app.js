@@ -188,10 +188,12 @@ btnSendLink.addEventListener("click", async () => {
   });
 
   if (error) {
-    console.error(error);
-    toast("Fehler beim Senden des Links");
-    return;
-  }
+  console.error("Magic link error:", error);
+  toast(error.message || "Fehler beim Senden des Links");
+  alert(error.message || "Fehler beim Senden des Links");
+  return;
+}
+
 
   toast("Magic-Link gesendet ✅ (Email öffnen)");
 });
