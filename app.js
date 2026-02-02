@@ -128,6 +128,18 @@ function toggleCollapsed(catId) {
 
 /* ======= AUTH FLOW ======= */
 async function refreshSession() {
+  // Magic-Link callback: code -> session tauschen
+try {
+  const url = new URL(window.location.href);
+  if (url.searchParams.get("code")) {
+    await supabaseClient.auth.exchangeCodeForSession(window.location.href);
+    url.searchParams.delete("code");
+    window.history.replaceState({}, document.title, url.toString());
+  }
+} catch (e) {
+  console.warn("exchangeCodeForSession failed", e);
+}
+
   const { data } = await supabaseClient.auth.getSession();
   sessionUser = data?.session?.user || null;
 
@@ -168,7 +180,7 @@ btnSendLink.addEventListener("click", async () => {
   if (!email) return toast("Bitte Email eingeben");
 
   // redirectTo muss in Supabase Auth settings erlaubt sein
-  const redirectTo = window.location.origin;
+  const redirectTo = "https://kiddo675.github.io/shopping-list-secure/";
 
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
