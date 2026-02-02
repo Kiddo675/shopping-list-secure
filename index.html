@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Einkaufsliste</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Supabase JS via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <button class="navBtn" id="btnBack" aria-label="Zurück" style="display:none;">‹</button>
+
+    <div class="topTitleWrap">
+      <div class="topTitle" id="topTitle">Einkaufsliste</div>
+      <div class="topSub" id="topSub">—</div>
+    </div>
+
+    <div class="topActions">
+      <button class="navBtn" id="btnShare" style="display:none;">Teilen</button>
+      <button class="navBtn" id="btnLogout">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- LOGIN VIEW -->
+    <section class="screen" id="screenLogin">
+      <div class="card">
+        <h2 class="h2">Anmelden</h2>
+        <p class="muted">Du bekommst einen Magic-Link per E-Mail. Einmal klicken → eingeloggt.</p>
+
+        <div class="row">
+          <input id="emailInput" class="input" placeholder="Email (z.B. mert@...)" inputmode="email" />
+          <button id="btnSendLink" class="btn primary">Link senden</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Tipp: Auf iPhone Safari öffnen. Danach „Zum Home-Bildschirm“.
+        </p>
+      </div>
+    </section>
+
+    <!-- LIST PICKER VIEW -->
+    <section class="screen" id="screenLists" style="display:none;">
+      <div class="card">
+        <h2 class="h2">Deine Listen</h2>
+        <div id="listsBox"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="h2">Neue Liste erstellen</h2>
+        <div class="row">
+          <input id="newListName" class="input" placeholder="Name (z.B. Familie)" />
+          <button id="btnCreateList" class="btn primary">Erstellen</button>
+        </div>
+        <p class="muted" style="margin-top:10px;">
+          Danach bekommst du einen Invite-Code zum Teilen.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="h2">Liste beitreten (Invite-Code)</h2>
+        <div class="row">
+          <input id="joinCode" class="input" placeholder="Invite-Code (z.B. A1B2C3D4E5F6)" />
+          <button id="btnJoin" class="btn">Beitreten</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIST VIEW -->
+    <section class="screen" id="screenList" style="display:none;">
+
+      <section class="addCategory">
+        <div class="row">
+          <input id="newCategoryName" class="input" placeholder="Neue Kategorie (z.B. Aldi)" />
+          <button id="btnAddCategory" class="btn">+ Kategorie</button>
+        </div>
+      </section>
+
+      <section id="categories"></section>
+    </section>
+
+  </main>
+
+  <!-- Floating + -->
+  <button class="fab" id="fabAdd" style="display:none;">+</button>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js");
+    }
+  </script>
+</body>
+</html>
