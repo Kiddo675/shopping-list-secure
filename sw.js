@@ -1,4 +1,4 @@
-const CACHE = "shoppinglist-secure-v2"; // Version hochsetzen!
+const CACHE = "shoppinglist-secure-v3"; // Version hochsetzen!
 const ASSETS = [
   "./",
   "./index.html",
