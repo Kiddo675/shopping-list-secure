@@ -9,7 +9,7 @@
  ************************************/
 
 /* ======= HIER EINTRAGEN ======= */
-const SUPABASE_URL = "https://tzpjtghncbczixyzlh.supabase.co";
+const SUPABASE_URL = "https://tzphjtghncbcziixyzlh.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_m7AtxKRROGyIqeihcbRYXw_RxlVoYbH";
 /* ============================== */
 
