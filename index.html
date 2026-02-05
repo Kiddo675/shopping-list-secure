@@ -4,59 +4,61 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Einkaufsliste</title>
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#000000" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-
-  <link rel="stylesheet" href="styles.css" />
-
-  <!-- Supabase JS (UMD) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
   <header class="topbar">
-    <div class="topTitleWrap">
-      <div class="topTitle" id="topTitle">Einkaufsliste</div>
-      <div class="topSub" id="topSub">Public Sync</div>
+    <div class="topbar__left">
+      <h1 class="title">Einkaufsliste</h1>
+      <div class="subtitle" id="roomLabel"></div>
     </div>
-
-    <div class="topActions">
-      <button class="navBtn" id="btnShare">Teilen</button>
-    </div>
+    <button class="btn ghost" id="shareBtn">Teilen</button>
   </header>
 
-  <main class="container">
-    <section class="screen" id="screenMain">
-      <div class="card">
-        <h2 class="h2">Items</h2>
-
-        <div class="row">
-          <input id="itemInput" class="input" placeholder="+ Item hinzufügen (z.B. Tomaten)" />
-          <button id="btnAdd" class="btn primary">Add</button>
-        </div>
-
-        <p class="muted" style="margin-top:10px;">
-          Tipp: Klick auf ein Item = löschen. Sync läuft automatisch.
-        </p>
+  <main class="wrap">
+    <section class="card">
+      <div class="card__head">
+        <div class="card__title">Kategorien</div>
+        <button class="btn" id="addCategoryBtn">+ Kategorie</button>
       </div>
 
-      <div class="card">
-        <div id="itemsBox"></div>
-      </div>
+      <div id="categories"></div>
     </section>
   </main>
 
-  <div id="toast" class="toast hidden"></div>
+  <template id="categoryTpl">
+    <div class="section" draggable="true">
+      <div class="section__head">
+        <button class="chev" title="Ein-/Ausklappen">▾</button>
 
-  <script src="app.js"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./sw.js");
-    }
-  </script>
+        <div class="section__title" contenteditable="true" spellcheck="false"></div>
+
+        <div class="section__actions">
+          <button class="btn tiny ghost moveUp" title="Hoch">↑</button>
+          <button class="btn tiny ghost moveDown" title="Runter">↓</button>
+          <button class="btn tiny danger delCat" title="Kategorie löschen">✕</button>
+        </div>
+      </div>
+
+      <div class="section__body">
+        <div class="adder">
+          <input class="input itemInput" type="text" placeholder="Item hinzufügen…" />
+          <button class="btn tiny addItemBtn">Add</button>
+        </div>
+
+        <div class="list"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="itemTpl">
+    <div class="row">
+      <button class="circle" title="Erledigt"></button>
+      <div class="row__text"></div>
+      <button class="trash" title="Löschen">✕</button>
+    </div>
+  </template>
+
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
