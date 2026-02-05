@@ -30,12 +30,18 @@ document.querySelector("#addCategoryBtn").addEventListener("click", async () => 
   if (!title) return;
   const nextSort = (state.categories.at(-1)?.sort ?? -1) + 1;
 
-  await supabase.from("categories").insert({
-    room: ROOM,
-    title: title.trim(),
-    sort: nextSort,
-    collapsed: false
-  });
+  const { error } = await supabase.from("categories").insert({
+  room: ROOM,
+  title: title.trim(),
+  sort: nextSort,
+  collapsed: false
+});
+
+if (error) {
+  alert("Kategorie-Insert Fehler: " + error.message);
+  console.error(error);
+}
+
 });
 
 const state = {
@@ -236,13 +242,19 @@ async function addItem(categoryId, rawTitle) {
   const items = state.itemsByCat.get(categoryId) || [];
   const nextSort = (items.at(-1)?.sort ?? -1) + 1;
 
-  await supabase.from("items").insert({
-    room: ROOM,
-    category_id: categoryId,
-    title,
-    done: false,
-    sort: nextSort
-  });
+  const { error } = await supabase.from("items").insert({
+  room: ROOM,
+  category_id: categoryId,
+  title,
+  done: false,
+  sort: nextSort
+});
+
+if (error) {
+  alert("Item-Insert Fehler: " + error.message);
+  console.error(error);
+}
+
 }
 
 async function reorderCategories(fromIdx, toIdx) {
