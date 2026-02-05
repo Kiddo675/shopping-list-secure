@@ -87,6 +87,7 @@ async function loadAll() {
     $cats.innerHTML = `<div style="padding:14px;color:#ffb3b3">Fehler categories: ${cErr.message}</div>`;
     return;
   }
+  await loadAll(); // <<< wichtig
 
   // Wenn noch keine Kategorie existiert: Default anlegen
   if (!categories || categories.length === 0) {
@@ -108,6 +109,7 @@ async function loadAll() {
     $cats.innerHTML = `<div style="padding:14px;color:#ffb3b3">Fehler items: ${iErr.message}</div>`;
     return;
   }
+  await loadAll(); // <<< wichtig
 
   state.categories = categories;
   state.itemsByCat.clear();
